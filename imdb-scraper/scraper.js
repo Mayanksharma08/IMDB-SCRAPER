@@ -1,6 +1,10 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const searchUrl = 'https://www.imdb.com/find?s=tt&ttype=ft&ref_=fn_ft&q=';
+const topUrl ='https://www.imdb.com/chart/top';
+const topIndiaUrl = 'https://www.imdb.com/india/top-rated-indian-movies/';
+const topTv =
+'https://www.imdb.com/chart/toptv/';
 const movieUrl = 'https://www.imdb.com/title/';
 
 const movieCache = {};
@@ -82,4 +86,49 @@ function getMovie(imdbID){
      });
 }
 
-module.exports ={searchMovies,getMovie};
+function topMovie(){
+    return fetch(`${topUrl}`)
+    .then(response => response.text())
+    .then(body => {
+    const movies = {};
+        const movie = [];
+   const $ = cheerio.load(body);
+$('.lister-list').find('td.titleColumn a').each(function (i, element) {
+   
+    movie.push( movies[i]=$(element).text());
+    });
+ return movie;   
+});
+}
+
+function topIndianMovie(){
+    return fetch(`${topIndiaUrl}`)
+    .then(response => response.text())
+    .then(body => {
+    const Indianmovies = {};
+        const Indianmovie = [];
+   const $ = cheerio.load(body);
+$('.lister-list').find('td.titleColumn a').each(function (i, element) {
+   
+    Indianmovie.push( Indianmovies[i]=$(element).text());
+    });
+ return Indianmovie;   
+});
+}
+
+function topTvSeries(){
+    return fetch(`${topTv}`)
+    .then(response => response.text())
+    .then(body => {
+    const TvSeries = {};
+        const TvSerie = [];
+   const $ = cheerio.load(body);
+$('.lister-list').find('td.titleColumn a').each(function (i, element) {
+   
+    TvSerie.push( TvSeries[i]=$(element).text());
+    });
+ return TvSerie;   
+});
+}
+
+module.exports ={searchMovies,getMovie,topMovie,topIndianMovie,topTvSeries};

@@ -27,6 +27,9 @@ const section = document.createElement('section');
   }, {
     title: 'Summary',
     property: 'summary'
+  }, {
+    title: 'Rating Value',
+    property: 'ratingValue'
   }];
 
 const descriptionHTML = properties.reduce((html, property) => {
